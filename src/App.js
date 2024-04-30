@@ -29,12 +29,24 @@ function App() {
           </Container>
         <Footer style={{height: '1vh'}} />
       </div>
-      <Toast onClose={() => dispatch(setPageMessage({show: false, message: "", variant: ""}))} animation autohide show={pageMessage.show} delay={3000} style={{position: 'absolute', left: 0, bottom: 0}} bg={pageMessage.variant}><Toast.Body><span style={{
+      <Toast onClose={() => dispatch(setPageMessage({show: false, message: "", variant: ""}))} animation autohide show={pageMessage.show} delay={3000} style={{position: 'absolute', right: 0, top: 0}} bg={pageMessage.variant}><Toast.Body><span style={{
         fontSize: '1rem', 
         color: "#FFFFFF"
       }}>{pageMessage.message}</span></Toast.Body></Toast>
-      {loading&&<Spinner style={{position: 'absolute', left: '50%', bottom: '50%'}} animation="border" role="status">
-      </Spinner>}
+      {loading&&
+        <div style={{
+          height: '100vh',
+          width: '100vw',
+          backgroundColor: '#FFF',
+          opacity: 0.5,
+          zIndex: 1000,
+          position: 'absolute',
+          left: 0,
+          top: 0
+        }}>
+          <Spinner style={{position: 'absolute', left: '50%', top: '50%'}} animation="border" role="status" />
+        </div>
+      }
     </Router>
    </div> 
   );

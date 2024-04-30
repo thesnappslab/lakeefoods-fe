@@ -30,7 +30,7 @@ export default function SegmentsScreen(){
             dispatch(setLoading(true));
             const response= await getRequest(ApiConstants.backendBaseUrl+ApiConstants.getSegments);
             if(response.isError){
-                dispatch(setPageMessage({show: true, message: response.message, variant: "error"}));
+                dispatch(setPageMessage({show: true, message: response.message, variant: "danger"}));
                 dispatch(setLoading(false));
             }else{
                 dispatch(setPageMessage({show: true, message: response.message, variant: "success"}))
@@ -52,8 +52,9 @@ export default function SegmentsScreen(){
             name: addSegmentName,
             description: addSegmentDesc
         })
+        console.log(response)
         if(response.isError){
-            dispatch(setPageMessage({show: true, message: response.message, variant: "error"}))
+            dispatch(setPageMessage({show: true, message: response.message, variant: "danger"}))
         }else{
             dispatch(setPageMessage({show: true, message: response.message, variant: "success"}))
             dispatch(addSegmentToStore(response.data));
@@ -61,9 +62,9 @@ export default function SegmentsScreen(){
         }
     }
     async function deleteSegment(){
-        const response= await deleteRequest(ApiConstants.backendBaseUrl+ApiConstants.deleteSegment+selectedRecord._id);
+        const response= await deleteRequest(ApiConstants.backendBaseUrl+ApiConstants.deleteSegment,selectedRecord._id);
         if(response.isError){
-            dispatch(setPageMessage({show: true, message: response.message, variant: "error"}))
+            dispatch(setPageMessage({show: true, message: response.message, variant: "danger"}))
         }else{
             dispatch(setPageMessage({show: true, message: response.message, variant: "success"}))
             dispatch(deleteSegmentInStore(response.data));
@@ -77,7 +78,7 @@ export default function SegmentsScreen(){
             description: editSegmentDesc
         })
         if(response.isError){
-            dispatch(setPageMessage({show: true, message: response.message, variant: "error"}))
+            dispatch(setPageMessage({show: true, message: response.message, variant: "danger"}))
         }else{
             dispatch(setPageMessage({show: true, message: response.message, variant: "success"}))
             dispatch(editSegmentInStore(response.data));
@@ -115,12 +116,13 @@ export default function SegmentsScreen(){
                                     <OverlayTrigger
                                         trigger="click"
                                         placement='right'
+                                        rootClose
                                         overlay={
                                         <Popover>
                                             <Popover.Header as="h3">Actions</Popover.Header>
                                             <Popover.Body>
-                                                <div onClick={()=>{setShowEditPop(true); setEditSegmentName(item.segment_name); setEditSegmentDesc(item.segment_description); setSelectedRecord(item)}} className='px-4 py-1 fs-6 border-bottom border-1'><i class="bi bi-pencil-fill me-2 fs-6 text-primary"></i><span>Edit</span></div>
-                                                <div onClick={()=>{setShowDeletePop(true); setSelectedRecord(item)}} className='px-4 py-1 fs-6'><i class="bi bi-trash3-fill me-2 fs-6 text-danger"></i><span>Delete</span></div>
+                                                <div role="button" onClick={()=>{setShowEditPop(true); setEditSegmentName(item.segment_name); setEditSegmentDesc(item.segment_description); setSelectedRecord(item)}} className='px-4 py-1 fs-6 border-bottom border-1'><i class="bi bi-pencil-fill me-2 fs-6 text-primary"></i><span>Edit</span></div>
+                                                <div role="button" onClick={()=>{setShowDeletePop(true); setSelectedRecord(item)}} className='px-4 py-1 fs-6'><i class="bi bi-trash3-fill me-2 fs-6 text-danger"></i><span>Delete</span></div>
                                             </Popover.Body>
                                         </Popover>
                                         }
