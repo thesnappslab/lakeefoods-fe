@@ -67,7 +67,7 @@ export default function SegmentsScreen(){
             dispatch(setPageMessage({show: true, message: response.message, variant: "danger"}))
         }else{
             dispatch(setPageMessage({show: true, message: response.message, variant: "success"}))
-            dispatch(deleteSegmentInStore(response.data));
+            dispatch(deleteSegmentInStore(selectedRecord._id));
             setSelectedRecord(null); setShowDeletePop(false);
         }
     }
@@ -121,8 +121,8 @@ export default function SegmentsScreen(){
                                         <Popover>
                                             <Popover.Header as="h3">Actions</Popover.Header>
                                             <Popover.Body>
-                                                <div role="button" onClick={()=>{setShowEditPop(true); setEditSegmentName(item.segment_name); setEditSegmentDesc(item.segment_description); setSelectedRecord(item)}} className='px-4 py-1 fs-6 border-bottom border-1'><i class="bi bi-pencil-fill me-2 fs-6 text-primary"></i><span>Edit</span></div>
-                                                <div role="button" onClick={()=>{setShowDeletePop(true); setSelectedRecord(item)}} className='px-4 py-1 fs-6'><i class="bi bi-trash3-fill me-2 fs-6 text-danger"></i><span>Delete</span></div>
+                                                <div role="button" onClick={()=>{setShowEditPop(true); setEditSegmentName(item.segment_name); setEditSegmentDesc(item.segment_description); setSelectedRecord(item)}} className='px-4 py-1 fs-6 border-bottom border-1'><i className="bi bi-pencil-fill me-2 fs-6 text-primary"></i><span>Edit</span></div>
+                                                <div role="button" onClick={()=>{setShowDeletePop(true); setSelectedRecord(item)}} className='px-4 py-1 fs-6'><i className="bi bi-trash3-fill me-2 fs-6 text-danger"></i><span>Delete</span></div>
                                             </Popover.Body>
                                         </Popover>
                                         }
