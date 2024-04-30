@@ -72,11 +72,25 @@ export default function SegmentsScreen(){
         }
     }
     async function editSegment(){
-        const response= await postRequest(ApiConstants.backendBaseUrl+ApiConstants.updateSegment, {
-            id: selectedRecord._id,
-            name: editSegmentName,
-            description: editSegmentDesc
-        })
+        let request= {}
+        if(selectedRecord.segment_name === editSegmentName){
+            request={
+                id: selectedRecord._id,
+                description: editSegmentDesc
+            }
+        }else if(selectedRecord.segment_description === editSegmentDesc){
+            request={
+                id: selectedRecord._id,
+                name: editSegmentName
+            }
+        }else{
+            request={
+                id: selectedRecord._id,
+                name: editSegmentName,
+                description: editSegmentDesc
+            }
+        }
+        const response= await postRequest(ApiConstants.backendBaseUrl+ApiConstants.updateSegment, request)
         if(response.isError){
             dispatch(setPageMessage({show: true, message: response.message, variant: "danger"}))
         }else{
